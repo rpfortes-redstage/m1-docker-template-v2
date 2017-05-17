@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+  apache:
+    image: rafaelcgstz/php-apache
+    ports:
+        - "80:80"
+    depends_on:
+      - db
+    links:
+      - db
+    volumes:
+      - ./magento:/var/www/html
+      - ~/.composer:/root/.composer
+      - ~/.npm:/root/.npm
+      - ~/.nvm:/root/.nvm
+
+  db:
+    image: mariadb
+    ports:
+      - "3300:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=magento
+      - MYSQL_USER=magento
+      - MYSQL_PASSWORD=magento
